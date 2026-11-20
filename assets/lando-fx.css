@@ -107,3 +107,27 @@ html.fx-pt-in::before { content: ""; position: fixed; inset: 0; z-index: 9999; b
   .brand { font-size: 16px; gap: 7px; }
   .nav { gap: 8px; }
 }
+
+/* 12. cursor ring */
+.fx-ring {
+  position: fixed; left: 0; top: 0; width: 34px; height: 34px;
+  border: 1.5px solid var(--red); border-radius: 50%;
+  pointer-events: none; z-index: 9998; opacity: 0;
+  transition: opacity .25s, width .25s, height .25s, background-color .25s;
+}
+.fx-ring.on { opacity: .85; }
+.fx-ring.big { width: 62px; height: 62px; background: rgba(var(--ac), .12); }
+.fx-ring.down { width: 24px; height: 24px; }
+
+/* 13. nav: animated underline on hover, lime + underline for the section you are in */
+html .nl a {
+  background-image: linear-gradient(var(--red), var(--red));
+  background-repeat: no-repeat;
+  background-position: 13px calc(100% - 5px);
+  background-size: 0 2px;
+}
+html .nl a:hover { background-size: calc(100% - 26px) 2px; }
+html .nl a[aria-current="true"] { color: var(--red); background-size: calc(100% - 26px) 2px; }
+
+/* 14. press feedback (the individual scale property composes with the magnetic translate) */
+.btn:active, .cta:active, .lang-btn:active, .tab:active { scale: .95; }

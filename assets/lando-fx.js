@@ -386,4 +386,67 @@
     goWithTransition(href);
   }, true);
 
+  /* ---------- 12. Magnetic buttons + cursor ring (mouse only) ---------- */
+  if (!reduce && window.matchMedia && matchMedia("(hover:hover) and (pointer:fine)").matches) {
+    var ring = null, rx = 0, ry = 0, rtx = 0, rty = 0, rraf = 0, magnet = null;
+    var RING_HOVER = "a[href], button, .btn, .cta, .bc, .hc, .cr, .tab";
+    // created on the first mouse move, not at load, so the swarm intro never snapshots it
+    function ensureRing() {
+      if (ring) return;
+      ring = document.createElement("div");
+      ring.className = "fx-ring";
+      ring.setAttribute("aria-hidden", "true");
+      document.body.appendChild(ring);
+    }
+    function ringLoop() {
+      rraf = 0;
+      rx += (rtx - rx) * .2; ry += (rty - ry) * .2;
+      ring.style.transform = "translate3d(" + rx.toFixed(1) + "px," + ry.toFixed(1) + "px,0) translate(-50%,-50%)";
+      if (Math.abs(rtx - rx) > .1 || Math.abs(rty - ry) > .1) rraf = requestAnimationFrame(ringLoop);
+    }
+    function releaseMagnet() { if (magnet) { magnet.style.translate = ""; magnet = null; } }
+    document.addEventListener("pointermove", function (e) {
+      if (e.pointerType && e.pointerType !== "mouse") return;
+      ensureRing();
+      rtx = e.clientX; rty = e.clientY;
+      if (!ring.classList.contains("on")) { rx = rtx; ry = rty; ring.classList.add("on"); }
+      var t = e.target.closest ? e.target : null;
+      ring.classList.toggle("big", !!(t && t.closest(RING_HOVER)));
+      if (!rraf) rraf = requestAnimationFrame(ringLoop);
+      var m = t && t.closest(".btn, .cta");
+      if (m !== magnet) { releaseMagnet(); magnet = m; }
+      if (m) {
+        var r = m.getBoundingClientRect();
+        var dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+        m.style.translate = (dx * .22).toFixed(1) + "px " + (dy * .3).toFixed(1) + "px";
+      }
+    }, { passive: true });
+    document.addEventListener("pointerdown", function () { if (ring) ring.classList.add("down"); });
+    document.addEventListener("pointerup", function () { if (ring) ring.classList.remove("down"); });
+    root.addEventListener("mouseleave", function () { releaseMagnet(); if (ring) ring.classList.remove("on", "big", "down"); });
+  }
+
+  /* ---------- 13. Scrollspy: the nav marks the section you are in ---------- */
+  var spy = [];
+  $$('.nl a[href^="#"]').forEach(function (a) {
+    var sec = document.getElementById(a.getAttribute("href").slice(1));
+    if (sec) spy.push({ a: a, sec: sec });
+  });
+  if (spy.length) {
+    var spyTick = false;
+    var paintSpy = function () {
+      spyTick = false;
+      var line = window.innerHeight * 0.35, cur = null;
+      spy.forEach(function (p) { if (p.sec.getBoundingClientRect().top <= line) cur = p.a; });
+      var ct = document.getElementById("contact");
+      if (ct && ct.getBoundingClientRect().top <= line) cur = null;   // Contact has its own button
+      spy.forEach(function (p) {
+        if (p.a === cur) p.a.setAttribute("aria-current", "true"); else p.a.removeAttribute("aria-current");
+      });
+    };
+    addEventListener("scroll", function () { if (!spyTick) { spyTick = true; requestAnimationFrame(paintSpy); } }, { passive: true });
+    addEventListener("resize", paintSpy);
+    paintSpy();
+  }
+
 })();
