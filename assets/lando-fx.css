@@ -1,0 +1,102 @@
+/* lando-fx.css — motion patterns studied from landonorris.com, re-implemented from scratch (no assets copied). */
+
+/* 1. Oval reveal: wrapper clips, inner element slides */
+.fx-clip { display: block; }
+.fx-clip.fx-inline { display: inline-block; }
+.fx-clip > * { will-change: transform; }
+html.fx-on .fx-clip:not(.fx-done) { clip-path: ellipse(20% 0% at 50% 100%); }
+html.fx-on .fx-clip:not(.fx-done) > * { transform: translateY(40%); }
+
+/* 2. Char roll on hover */
+.fx-roll { display: inline-flex; overflow: hidden; vertical-align: bottom; }
+.fx-roll .fx-ch { display: inline-block; position: relative; white-space: pre; will-change: transform; }
+.fx-roll .fx-ch::after {
+  content: attr(data-c);
+  position: absolute; left: 0; top: 100%;
+  white-space: pre;
+}
+
+/* 3. Scroll-reactive marquee */
+.fx-marquee {
+  position: relative; overflow: hidden;
+  border-block: 1px solid var(--line);
+  padding: 18px 0; margin: 0;
+  background: rgba(255, 255, 255, .015);
+  user-select: none;
+}
+.fx-marquee-track { display: flex; width: max-content; will-change: transform; }
+.fx-marquee-set { display: flex; flex-shrink: 0; align-items: center; }
+.fx-marquee-set span {
+  font: 400 clamp(36px, 6vw, 84px)/1 var(--bb);
+  letter-spacing: .02em; text-transform: uppercase;
+  color: transparent; -webkit-text-stroke: 1px var(--line2);
+  padding: 0 .35em; white-space: nowrap;
+  transition: color .4s, -webkit-text-stroke-color .4s;
+}
+.fx-marquee-set span:nth-child(3n) { color: var(--red); -webkit-text-stroke: 0; }
+.fx-marquee-set i {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--red); flex-shrink: 0; opacity: .7;
+}
+
+/* 4. Highlight bar wipe on <strong> inside hero copy (bar node injected by JS) */
+.fx-hl { position: relative; display: inline-block; }
+.fx-hl > span { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.fx-on .fx-clip:not(.fx-done) { clip-path: none; }
+  html.fx-on .fx-clip:not(.fx-done) > * { transform: none; }
+  .fx-marquee-track { transform: none !important; }
+}
+
+/* 5/6/7: image wipe overlay + cursor trail */
+.bi { position: relative; }
+.fx-wipe {
+  position: absolute; inset: 0; z-index: 2;
+  background: var(--red); pointer-events: none;
+  transform: scaleY(0);
+}
+.fx-trail {
+  position: fixed; inset: 0; z-index: 60;
+  pointer-events: none; mix-blend-mode: screen;
+}
+@media (prefers-reduced-motion: reduce) { .fx-trail, .fx-wipe { display: none; } }
+
+/* certificate modal: credential link */
+.mdl {
+  display: inline-block; margin: 12px 0 0;
+  font: 700 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase;
+  color: #000; background: var(--red); padding: 10px 14px; border-radius: 999px;
+  text-decoration: none;
+}
+.mdl:hover { background: var(--red-d); }
+.mdl[hidden] { display: none; }
+
+/* project filter bar is hidden while there is a single project */
+.tabs[hidden] { display: none; }
+
+/* 8. photo wipe sits above the photo (z2) and below the badge (z5) */
+.fx-wipe-p { z-index: 3; }
+
+/* 9. card tilt: beats .gc:hover's translateY so the tilt stays smooth */
+html .fx-tilt, html .fx-tilt:hover {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-2px);
+  transition: transform .12s ease-out, border-color .3s, box-shadow .3s;
+  will-change: transform;
+}
+
+/* 10. scroll progress bar */
+.fx-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 400;
+  background: var(--red); transform: scaleX(0); transform-origin: left center;
+  pointer-events: none;
+}
+
+/* 11. oval page transition overlay */
+.fx-pt { position: fixed; inset: 0; z-index: 9999; background: var(--red); pointer-events: none; }
+html.fx-pt-in::before { content: ""; position: fixed; inset: 0; z-index: 9999; background: var(--red); }
+@media (prefers-reduced-motion: reduce) { .fx-pt { display: none; } }
+
+/* hero: "Hello, I'm" stays on its own line, the name sits below it */
+.hero .hl > .fx-clip { display: table; }
+.hero .hl > br { display: none; }

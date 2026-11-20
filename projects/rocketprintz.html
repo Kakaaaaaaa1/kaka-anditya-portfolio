@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <script>try{if(sessionStorage.getItem("fx-pt")==="1"&&!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("fx-pt-in")}catch(e){}</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111112">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="RocketPrintz – Kaka Anditya Pambayung">
+  <meta property="og:description" content="A production management and raw material inventory system for a printing business, built with Expo, TypeScript and Firebase.">
+  <meta property="og:image" content="../assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>RocketPrintz – Kaka Anditya Pambayung</title>
+  <meta name="description" content="RocketPrintz: production management and raw material inventory system for a printing business, built with Expo, React Native, TypeScript and Firebase.">
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23d2ff00'/%3E%3Ctext x='50' y='72' font-size='64' text-anchor='middle' fill='black' font-family='Impact'%3EK%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@600&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/lando-fx.css">
+<style>
+    /* "Technologies Used" tiles */
+    .tk { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 22px 26px; margin-top: 6px }
+    .tk>div { display: flex; gap: 14px; align-items: flex-start }
+    .tk i {
+      flex: none; width: 40px; height: 40px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: var(--red); color: #000;
+      font: 800 12px var(--mono); font-style: normal
+    }
+    .tk b { display: block; font: 700 15px var(--sans); color: var(--tx); margin-bottom: 4px }
+    .tk p { color: var(--mu); font-size: 14px; line-height: 1.6; margin: 0 }
+    .ds .lk { color: var(--red); text-decoration: none; border-bottom: 1px solid currentColor; word-break: break-all }
+  </style>
+</head>
+
+<body>
+  <canvas id="aurora" aria-hidden="true"></canvas>
+  <header class="dock">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="../index.html#hero" aria-label="Home"><i>KA</i>Kaka Anditya Pambayung</a>
+      <div class="nl">
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#skills">Skills</a>
+        <a href="../index.html#projects">Projects</a>
+        <a href="../index.html#certs">Certifications</a>
+      </div>
+      <div class="dr">
+        <div class="lang-switch" role="group" aria-label="Language switcher">
+          <button type="button" class="lang-btn active" data-lang="en">EN</button>
+          <button type="button" class="lang-btn" data-lang="id">ID</button>
+        </div>
+        <a class="cta" href="../index.html#contact">CONTACT →</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section id="detail" style="display:block">
+      <a class="back mono" href="../index.html#projects" data-id="← KEMBALI KE PROJECT">← BACK TO PROJECTS</a>
+      <div class="sh">
+        <div class="chip mono" data-id="APLIKASI WEB &amp; MOBILE">WEB &amp; MOBILE APP</div>
+        <h2>RocketPrintz</h2>
+        <p data-id="Sistem informasi manajemen produksi dan persediaan bahan baku untuk Rocket Printz, usaha percetakan, sablon, konveksi, dan merchandise.">A production management and raw material inventory system for Rocket Printz, a printing, screen printing, apparel, and merchandise business.</p>
+      </div>
+
+      <div class="gal gc">
+        <div class="gs"><img id="gim" alt="RocketPrintz preview"><span class="gn" id="gnn"></span><button class="ga l"
+            aria-label="Previous image">‹</button><button class="ga r" aria-label="Next image">›</button></div>
+        <div class="th">
+          <button aria-label="Image 1"><img alt="" data-label="RocketPrintz – Login" src="../assets/projects/rocketprintz/rocketprintz1.png"></button>
+          <button aria-label="Image 2"><img alt="" data-label="RocketPrintz – Admin dashboard" src="../assets/projects/rocketprintz/rocketprintz2.png"></button>
+          <button aria-label="Image 3"><img alt="" data-label="RocketPrintz – Orders" src="../assets/projects/rocketprintz/rocketprintz3.png"></button>
+          <button aria-label="Image 4"><img alt="" data-label="RocketPrintz – Production planning" src="../assets/projects/rocketprintz/rocketprintz4.png"></button>
+          <button aria-label="Image 5"><img alt="" data-label="RocketPrintz – Running production" src="../assets/projects/rocketprintz/rocketprintz5.png"></button>
+          <button aria-label="Image 6"><img alt="" data-label="RocketPrintz – Materials" src="../assets/projects/rocketprintz/rocketprintz6.png"></button>
+        </div>
+      </div>
+
+      <div class="dg">
+        <div class="dm">
+          <section><span class="mono">01 // OVERVIEW</span>
+            <h3 data-id="Konteks Project">Project Context</h3>
+            <p data-id="RocketPrintz dibangun sebagai project Kerja Praktik di Rocket Printz. Sistem ini menggantikan pencatatan manual dengan satu aplikasi yang mencakup tiga proses: manajemen order, perencanaan produksi, dan manajemen persediaan bahan baku. Akses dibagi untuk tiga peran: Admin, Supervisor, dan Operator.">RocketPrintz was built as an internship (Kerja Praktik) project at Rocket Printz. It replaces manual record keeping with one application that covers three processes: order management, production planning, and raw material inventory. Access is split across three roles: Admin, Supervisor, and Operator.</p>
+          </section>
+
+          <section><span class="mono">02 // ENGINEERING</span>
+            <h3 data-id="Arsitektur &amp; Implementasi">Architecture &amp; Implementation</h3>
+            <p data-id="Aplikasi dibuat dengan Expo dan React Native memakai TypeScript, dengan satu basis kode untuk versi web dan Android. Navigasi memakai Expo Router berbasis file, dan setiap halaman hanya bisa dibuka oleh peran yang berhak.">The app is built with Expo and React Native in TypeScript, with a single codebase for the web and Android versions. Navigation uses file-based Expo Router, and every page can only be opened by the role that owns it.</p>
+            <p data-id="Login memakai Firebase Authentication dengan email atau nama pengguna. Data order, planning, bahan, dan pengguna disimpan di Cloud Firestore, sehingga perubahan dari satu peran langsung terlihat di peran lain secara real-time.">Login uses Firebase Authentication with an email or a username. Orders, plans, materials, and users live in Cloud Firestore, so a change made by one role shows up for the others in real time.</p>
+            <p data-id="Supervisor dapat mencetak Work Order dari halaman planning. Versi web di-deploy ke Vercel dengan domain sendiri, dan versi Android dibuat sebagai APK melalui EAS Build.">Supervisors can print a Work Order from the planning page. The web version is deployed on Vercel under a custom domain, and the Android version is built as an APK through EAS Build.</p>
+          </section>
+
+          <section><span class="mono">03 // FEATURES</span>
+            <h3 data-id="Fitur Utama">Key Technical Features</h3>
+            <div class="fg">
+              <div><i>✓</i><span data-id="Manajemen order oleh Admin">Order management for admins</span></div>
+              <div><i>✓</i><span data-id="Planning dan penjadwalan produksi">Production planning and scheduling</span></div>
+              <div><i>✓</i><span data-id="Pemantauan produksi yang sedang berjalan secara real-time untuk Supervisor">Real-time monitoring of running production for supervisors</span></div>
+              <div><i>✓</i><span data-id="Operator melihat jadwal miliknya, memulai, dan menyelesaikan produksi">Operators see their own schedule, then start and finish production</span></div>
+              <div><i>✓</i><span data-id="Persediaan bahan baku dengan stok dan batas minimum stok">Raw material inventory with stock levels and minimum stock</span></div>
+              <div><i>✓</i><span data-id="Akses berbasis peran, cetak Work Order, dashboard ringkasan, dan pencarian data">Role-based access, printable Work Orders, summary dashboards, and search</span></div>
+            </div>
+          </section>
+
+          <section><span class="mono">04 // TECH STACK</span>
+            <h3 data-id="Teknologi yang Digunakan">Technologies Used</h3>
+            <div class="tk">
+              <div><i>EX</i>
+                <div><b>Expo &amp; React Native</b>
+                  <p data-id="Satu basis kode untuk web dan Android, dengan Expo Router untuk navigasi berbasis file.">One codebase for web and Android, with Expo Router for file-based navigation.</p>
+                </div>
+              </div>
+              <div><i>TS</i>
+                <div><b>TypeScript</b>
+                  <p data-id="Menjaga kode tetap aman dan mudah dirawat, termasuk pada aturan akses antar peran.">Keeps the code safe and maintainable, including the access rules between roles.</p>
+                </div>
+              </div>
+              <div><i>FB</i>
+                <div><b>Firebase</b>
+                  <p data-id="Authentication untuk login dan Cloud Firestore sebagai basis data real-time.">Authentication for login and Cloud Firestore as the real-time database.</p>
+                </div>
+              </div>
+              <div><i>VC</i>
+                <div><b>Vercel</b>
+                  <p data-id="Hosting versi web dengan domain sendiri.">Hosts the web version under a custom domain.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="gc ds">
+          <h4 data-id="DETAIL PROJECT">PROJECT DETAILS</h4>
+          <dl>
+            <div><dt data-id="KATEGORI">CATEGORY</dt><dd data-id="APLIKASI WEB &amp; MOBILE">WEB &amp; MOBILE APP</dd></div>
+            <div><dt data-id="TAHUN">DATE</dt><dd>2026</dd></div>
+            <div><dt data-id="PERAN">ROLE</dt><dd data-id="Pengembang Full Stack (solo)">Solo Full Stack Developer</dd></div>
+            <div><dt data-id="TEMPAT">CLIENT</dt><dd>Rocket Printz</dd></div>
+            <div><dt data-id="TAUTAN">LINKS</dt>
+              <dd><a class="lk" href="https://rocketprintz.my.id" target="_blank" rel="noopener">rocketprintz.my.id</a><br>
+                <a class="lk" href="https://github.com/Kakaaaaaaa1/rocketprintz" target="_blank" rel="noopener">GitHub</a></dd>
+            </div>
+          </dl>
+          <div class="tags"><span class="tag">Expo</span><span class="tag">React Native</span><span class="tag">TypeScript</span><span class="tag">Firebase</span></div>
+        </aside>
+      </div>
+
+      <a class="nx gc" href="../index.html#projects">
+        <div><span class="mono" data-id="KEMBALI">BACK TO</span>
+          <h3 data-id="SEMUA PROJECT">ALL PROJECTS</h3>
+          <p data-id="Lihat project lain di portfolio ini.">See the other projects in this portfolio.</p>
+        </div><b aria-hidden="true">→</b>
+      </a>
+    </section>
+  </main>
+  <script src="../assets/lando-fx.js"></script>
+  <script src="../assets/detail.js"></script>
+</body>
+
+</html>
