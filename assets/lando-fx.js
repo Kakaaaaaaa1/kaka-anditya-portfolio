@@ -22,6 +22,52 @@
   window.__acRGB = function () { return acCache; };   // read by app.js aurora + the cursor trail
   readAC();
 
+  /* ---------- 0b. Theme picker: lime is the default, the others override CSS variables via data-theme ---------- */
+  var THEMES = [
+    { id: "lime", name: "Lime", c: "#d2ff00" },
+    { id: "cyan", name: "Cyan", c: "#00e5ff" },
+    { id: "orange", name: "Orange", c: "#ff6b00" },
+    { id: "pink", name: "Pink", c: "#ff3d81" },
+    { id: "mint", name: "Mint", c: "#3ddc97" },
+    { id: "lavender", name: "Lavender", c: "#b69cff" }
+  ];
+  function themeById(id) { for (var i = 0; i < THEMES.length; i++) if (THEMES[i].id === id) return THEMES[i]; return THEMES[0]; }
+  function paintFavicon(color) {
+    var link = $('link[rel~="icon"]');
+    if (!link) return;
+    link.href = "data:image/svg+xml," + encodeURIComponent(
+      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='" + color + "'/>" +
+      "<text x='50' y='72' font-size='64' text-anchor='middle' fill='black' font-family='Impact'>K</text></svg>");
+  }
+  var swatches = [];
+  function applyTheme(id, save) {
+    var t = themeById(id);
+    if (t.id === "lime") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", t.id);
+    if (save) { try { localStorage.setItem("fx-theme", t.id); } catch (e) {} }
+    readAC();
+    paintFavicon(t.c);
+    swatches.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.theme === t.id ? "true" : "false"); });
+  }
+  var picker = document.createElement("div");
+  picker.className = "fx-themes";
+  picker.setAttribute("role", "group");
+  picker.setAttribute("aria-label", "Accent color");
+  THEMES.forEach(function (t) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "fx-swatch";
+    b.dataset.theme = t.id;
+    b.title = t.name;
+    b.setAttribute("aria-label", t.name + " theme");
+    b.style.setProperty("--sw", t.c);
+    b.addEventListener("click", function () { applyTheme(t.id, true); });
+    swatches.push(b);
+    picker.appendChild(b);
+  });
+  document.body.appendChild(picker);
+  var savedTheme = root.getAttribute("data-theme") || "lime";   // the <head> script already applied it, no flash
+  applyTheme(savedTheme, false);
+
   /* ---------- Image fallback: missing screenshots get a labelled placeholder, never a broken icon ---------- */
   function imgFallback(im) {
     if (!im || im.tagName !== "IMG" || im.dataset.ph) return;

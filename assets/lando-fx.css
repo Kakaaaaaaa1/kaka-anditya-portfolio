@@ -131,3 +131,26 @@ html .nl a[aria-current="true"] { color: var(--red); background-size: calc(100% 
 
 /* 14. press feedback (the individual scale property composes with the magnetic translate) */
 .btn:active, .cta:active, .lang-btn:active, .tab:active { scale: .95; }
+
+/* ===== themes: lime is the default in style.css :root; each block overrides accent + card tint ===== */
+html[data-theme="cyan"]     { --red: #00e5ff; --red-d: #00b8cc; --ac: 0, 229, 255;   --surf: #121a1d; --card: rgba(24, 40, 46, .78); }
+html[data-theme="orange"]   { --red: #ff6b00; --red-d: #d95a00; --ac: 255, 107, 0;   --surf: #1d1812; --card: rgba(46, 36, 26, .78); }
+html[data-theme="pink"]     { --red: #ff3d81; --red-d: #d9326d; --ac: 255, 61, 129;  --surf: #1d1217; --card: rgba(46, 26, 36, .78); }
+html[data-theme="mint"]     { --red: #3ddc97; --red-d: #2fb87d; --ac: 61, 220, 151;  --surf: #121d18; --card: rgba(24, 46, 36, .78); }
+html[data-theme="lavender"] { --red: #b69cff; --red-d: #957bdb; --ac: 182, 156, 255; --surf: #17141f; --card: rgba(36, 30, 52, .78); }
+
+/* theme picker */
+.fx-themes {
+  position: fixed; left: 16px; bottom: 16px; z-index: 300;
+  display: flex; gap: 8px; padding: 9px 11px;
+  background: rgba(10, 10, 10, .85); border: 1px solid var(--line2); border-radius: 999px;
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.fx-swatch {
+  width: 18px; height: 18px; padding: 0; border-radius: 50%; cursor: pointer;
+  background: var(--sw); border: 2px solid transparent;
+  transition: transform .15s, box-shadow .15s;
+}
+.fx-swatch:hover { transform: scale(1.2); }
+.fx-swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px #111112, 0 0 0 4px var(--sw); }
+@media (max-width: 420px) { .fx-themes { left: 10px; bottom: 10px; gap: 6px; padding: 7px 9px; } }
