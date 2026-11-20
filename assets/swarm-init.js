@@ -136,6 +136,25 @@
         });
       }
 
+      // Play the intro on a refresh or a fresh visit, but not when moving around inside the site
+      // (project page -> home, back/forward). Those moves already get the oval page transition.
+      function cameFromOwnSite() {
+        try {
+          var nav = performance.getEntriesByType("navigation")[0];
+          var type = nav && nav.type;
+          if (type === "reload") return false;             // refresh: play
+          if (type === "back_forward") return true;        // history buttons: skip
+          // flag set by lando-fx.js right before it navigates between the site's own pages
+          if (sessionStorage.getItem("fx-pt") === "1") return true;
+          // plain link/URL arrival: skip only when the previous page is on this same site
+          if (document.referrer) {
+            var u = new URL(document.referrer);
+            if (u.origin === location.origin && u.origin !== "null") return true;
+          }
+        } catch (_) { }
+        return false;
+      }
+
       // The intro builds the page top-down, so it must start from the top. Without this, a refresh
       // while scrolled down makes the browser restore that position and the swarm paints out of view.
       // behavior:"instant" because the page sets scroll-behavior:smooth.
@@ -176,6 +195,7 @@
         if (!opts.auto) return;
         if (disabled()) return;
         if (prefersReducedMotion()) return;
+        if (!forced() && cameFromOwnSite()) return;
         if (alreadyDone()) return;
         if (window[KEY]) return; // already running
 
