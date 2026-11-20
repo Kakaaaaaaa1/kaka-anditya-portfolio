@@ -173,7 +173,7 @@
     function phCover(n) {
       var t = n.replace(/&/g, "&amp;").replace(/</g, "&lt;");
       var phLabel = I18N[curLang] ? I18N[curLang].phText : "COVER BELUM DITAMBAHKAN";
-      var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675"><rect width="1200" height="675" fill="#0b0b0b"/><circle cx="1010" cy="190" r="120" fill="none" stroke="#ffb400" stroke-opacity=".35"/><circle cx="1010" cy="190" r="190" fill="none" stroke="#ffb400" stroke-opacity=".18"/><rect x="70" y="80" width="330" height="44" fill="#ffb400"/><text x="90" y="110" font-size="22" font-weight="700" font-family="monospace" fill="#000">' + phLabel + '</text><text x="70" y="560" font-size="64" font-weight="800" font-family="Arial,sans-serif" fill="#f5f5f5">' + t + '</text></svg>';
+      var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675"><rect width="1200" height="675" fill="#0b0b0b"/><circle cx="1010" cy="190" r="120" fill="none" stroke="#d2ff00" stroke-opacity=".35"/><circle cx="1010" cy="190" r="190" fill="none" stroke="#d2ff00" stroke-opacity=".18"/><rect x="70" y="80" width="330" height="44" fill="#d2ff00"/><text x="90" y="110" font-size="22" font-weight="700" font-family="monospace" fill="#000">' + phLabel + '</text><text x="70" y="560" font-size="64" font-weight="800" font-family="Arial,sans-serif" fill="#f5f5f5">' + t + '</text></svg>';
       return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
     }
     $("#grid").addEventListener("error", function (e) {
@@ -189,7 +189,7 @@
     function certImg(c) {
       if (c.img) return c.img; if (c._u) return c._u;
       var L = wrap(c.n, 30).slice(0, 3).map(function (t, i) { return '<text x="400" y="' + (310 + i * 30) + '" font-size="24" font-weight="700" text-anchor="middle" fill="#111">' + esc(t) + '</text>' }).join("");
-      var s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560"><rect width="800" height="560" fill="#fff"/><path d="M800 0v300C700 200 640 90 560 0z" fill="#ffb400"/><path d="M0 560h260C180 500 90 520 0 430z" fill="#111"/><g font-family="Arial,sans-serif"><text x="400" y="110" font-size="40" font-weight="800" text-anchor="middle" fill="#111">CERTIFICATE</text><text x="400" y="145" font-size="16" text-anchor="middle" fill="#555">OF COMPLETION</text><text x="400" y="205" font-size="14" text-anchor="middle" fill="#777">Awarded to</text><text x="400" y="255" font-size="34" font-weight="700" text-anchor="middle" fill="#b87a00">Your Name Here</text>' + L + '<text x="400" y="440" font-size="16" text-anchor="middle" fill="#555">' + esc(c.o) + ' · ' + c.y + '</text><line x1="320" y1="500" x2="480" y2="500" stroke="#999"/><text x="400" y="522" font-size="12" text-anchor="middle" fill="#777">Authorized signature</text></g></svg>';
+      var s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560"><rect width="800" height="560" fill="#fff"/><path d="M800 0v300C700 200 640 90 560 0z" fill="#d2ff00"/><path d="M0 560h260C180 500 90 520 0 430z" fill="#111"/><g font-family="Arial,sans-serif"><text x="400" y="110" font-size="40" font-weight="800" text-anchor="middle" fill="#111">CERTIFICATE</text><text x="400" y="145" font-size="16" text-anchor="middle" fill="#555">OF COMPLETION</text><text x="400" y="205" font-size="14" text-anchor="middle" fill="#777">Awarded to</text><text x="400" y="255" font-size="34" font-weight="700" text-anchor="middle" fill="#b87a00">Your Name Here</text>' + L + '<text x="400" y="440" font-size="16" text-anchor="middle" fill="#555">' + esc(c.o) + ' · ' + c.y + '</text><line x1="320" y1="500" x2="480" y2="500" stroke="#999"/><text x="400" y="522" font-size="12" text-anchor="middle" fill="#777">Authorized signature</text></g></svg>';
       return c._u = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(s)
     }
     var cl = $("#certGrid"), pv = $("#pv"), pi = pv.querySelector("img"), ps = pv.querySelector("span"), md = $("#md"), lastRow = null, canHover = matchMedia("(hover:hover)").matches;
@@ -240,7 +240,7 @@
       var c = $("#aurora"), x = c.getContext("2d"), W, H; function rs() { W = c.width = innerWidth / 2; H = c.height = innerHeight / 2 } rs(); addEventListener("resize", rs);
       (function d(t) {
         x.clearRect(0, 0, W, H); var cx = W * .72 + Math.sin(t / 5000) * W * .05, cy = H * .4 + Math.cos(t / 6000) * H * .05;
-        for (var i = 1; i < 34; i++) { var r = i * Math.max(W, H) * .032 + ((t / 90) % (Math.max(W, H) * .032)); x.beginPath(); x.arc(cx, cy, r, 0, 6.3); x.strokeStyle = "rgba(" + (window.__acRGB ? window.__acRGB() : "255,180,0") + "," + (.1 * (1 - r / (Math.max(W, H) * 1.1))) + ")"; x.lineWidth = 1; x.stroke() }
+        for (var i = 1; i < 34; i++) { var r = i * Math.max(W, H) * .032 + ((t / 90) % (Math.max(W, H) * .032)); x.beginPath(); x.arc(cx, cy, r, 0, 6.3); x.strokeStyle = "rgba(" + (window.__acRGB ? window.__acRGB() : "210,255,0") + "," + (.1 * (1 - r / (Math.max(W, H) * 1.1))) + ")"; x.lineWidth = 1; x.stroke() }
         requestAnimationFrame(d)
       })(0)
     })();

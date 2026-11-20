@@ -14,10 +14,10 @@
   if (!reduce) root.classList.add("fx-on");
 
   /* ---------- 0. Accent color (read by the cursor trail, the aurora and image fallbacks) ---------- */
-  var acCache = "255,180,0";
+  var acCache = "210,255,0";
   function readAC() {
     var v = getComputedStyle(root).getPropertyValue("--ac").replace(/\s/g, "");
-    acCache = v || "255,180,0";
+    acCache = v || "210,255,0";
   }
   window.__acRGB = function () { return acCache; };   // read by app.js aurora + the cursor trail
   readAC();
@@ -78,7 +78,7 @@
   checkReveal();
   // failsafe: a heading whose reveal started must never stay hidden if animations are blocked or throttled
   setInterval(function () {
-    $(".fx-clip:not(.fx-done)").forEach(function (w) {
+    $$(".fx-clip:not(.fx-done)").forEach(function (w) {
       if (w._fxStarted && performance.now() - w._fxStarted > 4500) w.classList.add("fx-done");
     });
   }, 1000);
@@ -129,7 +129,7 @@
   /* ---------- 3. Scroll-reactive marquee ---------- */
   var anchor = $(".div");
   if (anchor && !reduce) {
-    var words = ["Laravel", "PHP", "MySQL", "Flutter", "REST API", "Python", "YOLOv5", "Streamlit"];
+    var words = ["Expo", "React Native", "TypeScript", "Firebase", "Firestore", "Vercel", "Laravel", "Flutter"];
     var band = document.createElement("div");
     band.className = "fx-marquee";
     band.setAttribute("aria-hidden", "true");
@@ -196,14 +196,12 @@
     if (!m) return;
     var n = +m[1], suffix = m[2];
     if (reduce) return;
-    b._fxSet = true;
     var t0 = performance.now(), dur = 1600;
     (function step(now) {
       var p = Math.min((now - t0) / dur, 1);
       b.textContent = Math.round(n * EASE_OUT_EXPO(p)) + suffix;
-      if (p < 1) requestAnimationFrame(step); else b._fxLast = b.textContent;
+      if (p < 1) requestAnimationFrame(step);
     })(t0);
-    b._fxSet = false;
   }
   var statB = $$(".hr .stats b");
   if (statB.length && !reduce && "IntersectionObserver" in window) {
@@ -212,9 +210,6 @@
     }, { threshold: .6 });
     statB.forEach(function (b) {
       cio.observe(b);
-      b._fxLast = b.textContent;
-      // language switch rewrites the text -> show it directly, no recount
-      new MutationObserver(function () { b._fxLast = b.textContent; }).observe(b, { childList: true, characterData: true });
     });
   }
 
@@ -319,7 +314,7 @@
       card.style.setProperty("--rx", (-py * 7).toFixed(2) + "deg");
       card.style.setProperty("--ry", (px * 7).toFixed(2) + "deg");
     }, { passive: true });
-    document.addEventListener("pointerleave", untilt);
+    root.addEventListener("mouseleave", untilt);
   }
 
   /* ---------- 10. Scroll progress bar ---------- */

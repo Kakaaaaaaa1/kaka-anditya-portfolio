@@ -54,7 +54,7 @@
     (function d(t) {
       x.clearRect(0, 0, W, H);
       var m = Math.max(W, H), cx = W * .72 + Math.sin(t / 5000) * W * .05, cy = H * .4 + Math.cos(t / 6000) * H * .05;
-      var ac = window.__acRGB ? window.__acRGB() : "255,180,0";
+      var ac = window.__acRGB ? window.__acRGB() : "210,255,0";
       for (var i = 1; i < 34; i++) {
         var r = i * m * .032 + ((t / 90) % (m * .032));
         x.beginPath(); x.arc(cx, cy, r, 0, 6.3);
