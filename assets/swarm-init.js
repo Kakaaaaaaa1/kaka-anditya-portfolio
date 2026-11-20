@@ -143,6 +143,35 @@
         try { window.scrollTo({ top: 0, left: 0, behavior: "instant" }); } catch (_) { window.scrollTo(0, 0); }
       }
 
+      // The engine's control bar (.hud) is one wide centered row. On phones it is wider than the screen,
+      // so the left icon and the right close button get cut off. The engine keeps its UI in a shadow root,
+      // so extra rules have to be injected there. The engine file itself stays untouched.
+      var HUD_CSS =
+        "@media (max-width:640px){" +
+        ".hud{box-sizing:border-box;width:max-content;max-width:calc(100vw - 16px);flex-wrap:wrap;justify-content:center;gap:6px;padding:6px;" +
+        "bottom:calc(12px + env(safe-area-inset-bottom,0px))}" +
+        ".hud .dots,.hud .sep,.hud .bar{display:none}" +
+        ".hud .txt{flex:1 1 100%;justify-content:center}" +
+        ".hud-unhide{bottom:calc(12px + env(safe-area-inset-bottom,0px))}" +
+        "}";
+      function patchHud() {
+        var tries = 0;
+        (function attempt() {
+          var root = null;
+          try { root = window[KEY] && window[KEY].app && window[KEY].app.view && window[KEY].app.view.root; } catch (_) { }
+          if (root) {
+            if (!root.querySelector("style[data-hudfix]")) {
+              var st = document.createElement("style");
+              st.setAttribute("data-hudfix", "");
+              st.textContent = HUD_CSS;
+              root.appendChild(st);
+            }
+            return;
+          }
+          if (++tries < 40) setTimeout(attempt, 150);
+        })();
+      }
+
       async function boot() {
         if (!opts.auto) return;
         if (disabled()) return;
@@ -184,6 +213,7 @@
           goTop();
           await loadEngine();
           markDone();
+          patchHud();
           // Auto-start Tour: visitors get the smooth scroll-driven build
           // from the first paint instead of a static half-built page.
           // Cancelled by any real user scroll, so it never fights the wheel.
