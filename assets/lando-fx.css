@@ -139,18 +139,35 @@ html[data-theme="pink"]     { --red: #ff3d81; --red-d: #d9326d; --ac: 255, 61, 1
 html[data-theme="mint"]     { --red: #3ddc97; --red-d: #2fb87d; --ac: 61, 220, 151;  --surf: #121d18; --card: rgba(24, 46, 36, .78); }
 html[data-theme="lavender"] { --red: #b69cff; --red-d: #957bdb; --ac: 182, 156, 255; --surf: #17141f; --card: rgba(36, 30, 52, .78); }
 
-/* theme picker */
+/* theme picker: a single circle that expands into the color choices */
 .fx-themes {
   position: fixed; left: 16px; bottom: 16px; z-index: 300;
-  display: flex; gap: 8px; padding: 9px 11px;
+  display: flex; align-items: center; padding: 5px;
   background: rgba(10, 10, 10, .85); border: 1px solid var(--line2); border-radius: 999px;
   -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
 }
+.fx-theme-toggle {
+  flex: none; width: 26px; height: 26px; padding: 0; border-radius: 50%; cursor: pointer;
+  background: var(--sw, var(--red)); border: 2px solid #111112;
+  box-shadow: 0 0 0 2px var(--sw, var(--red));
+  transition: transform .2s, box-shadow .2s;
+}
+.fx-theme-toggle:hover { transform: scale(1.1); }
+.fx-themes.open .fx-theme-toggle { box-shadow: 0 0 0 2px var(--line2); }
+.fx-theme-list {
+  display: flex; align-items: center; gap: 8px;
+  max-width: 0; margin-left: 0; padding: 6px 0; opacity: 0; overflow: hidden; visibility: hidden;
+  transition: max-width .35s cubic-bezier(.215, .61, .355, 1), margin-left .35s cubic-bezier(.215, .61, .355, 1), padding .35s cubic-bezier(.215, .61, .355, 1), opacity .25s, visibility 0s .35s;
+}
+.fx-themes.open .fx-theme-list {
+  max-width: 240px; margin-left: 4px; padding: 6px 8px; opacity: 1; visibility: visible;
+  transition: max-width .35s cubic-bezier(.215, .61, .355, 1), margin-left .35s cubic-bezier(.215, .61, .355, 1), padding .35s cubic-bezier(.215, .61, .355, 1), opacity .25s .08s, visibility 0s;
+}
 .fx-swatch {
-  width: 18px; height: 18px; padding: 0; border-radius: 50%; cursor: pointer;
+  flex: none; width: 18px; height: 18px; padding: 0; border-radius: 50%; cursor: pointer;
   background: var(--sw); border: 2px solid transparent;
   transition: transform .15s, box-shadow .15s;
 }
 .fx-swatch:hover { transform: scale(1.2); }
 .fx-swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px #111112, 0 0 0 4px var(--sw); }
-@media (max-width: 420px) { .fx-themes { left: 10px; bottom: 10px; gap: 6px; padding: 7px 9px; } }
+@media (max-width: 420px) { .fx-themes { left: 10px; bottom: 10px; } .fx-theme-list { gap: 6px; } }

@@ -40,6 +40,7 @@
       "<text x='50' y='72' font-size='64' text-anchor='middle' fill='black' font-family='Impact'>K</text></svg>");
   }
   var swatches = [];
+  var toggleBtn = null;
   function applyTheme(id, save) {
     var t = themeById(id);
     if (t.id === "lime") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", t.id);
@@ -47,11 +48,26 @@
     readAC();
     paintFavicon(t.c);
     swatches.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.theme === t.id ? "true" : "false"); });
+    if (toggleBtn) toggleBtn.style.setProperty("--sw", t.c);
   }
   var picker = document.createElement("div");
   picker.className = "fx-themes";
-  picker.setAttribute("role", "group");
-  picker.setAttribute("aria-label", "Accent color");
+  toggleBtn = document.createElement("button");
+  toggleBtn.type = "button";
+  toggleBtn.className = "fx-theme-toggle";
+  toggleBtn.setAttribute("aria-label", "Choose accent color");
+  toggleBtn.setAttribute("aria-expanded", "false");
+  toggleBtn.title = "Theme color";
+  var list = document.createElement("div");
+  list.className = "fx-theme-list";
+  list.setAttribute("role", "group");
+  list.setAttribute("aria-label", "Accent color");
+  function setOpen(open, focusToggle) {
+    picker.classList.toggle("open", open);
+    toggleBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    if (!open && focusToggle) toggleBtn.focus();
+  }
+  toggleBtn.addEventListener("click", function () { setOpen(!picker.classList.contains("open")); });
   THEMES.forEach(function (t) {
     var b = document.createElement("button");
     b.type = "button";
@@ -60,10 +76,14 @@
     b.title = t.name;
     b.setAttribute("aria-label", t.name + " theme");
     b.style.setProperty("--sw", t.c);
-    b.addEventListener("click", function () { applyTheme(t.id, true); });
+    b.addEventListener("click", function () { applyTheme(t.id, true); setOpen(false, true); });
     swatches.push(b);
-    picker.appendChild(b);
+    list.appendChild(b);
   });
+  picker.appendChild(toggleBtn);
+  picker.appendChild(list);
+  document.addEventListener("click", function (e) { if (!picker.contains(e.target)) setOpen(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && picker.classList.contains("open")) setOpen(false, true); });
   document.body.appendChild(picker);
   var savedTheme = root.getAttribute("data-theme") || "lime";   // the <head> script already applied it, no flash
   applyTheme(savedTheme, false);
