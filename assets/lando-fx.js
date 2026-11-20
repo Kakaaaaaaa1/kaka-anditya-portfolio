@@ -113,20 +113,17 @@
     });
   }
   var rollEls = reduce ? [] : $$(".nl a, .cta, .btn");
+  // The per-letter copies are built on first hover/focus, not at load. The swarm intro snapshots the
+  // page at load and repaints every ::after it finds, so pre-built copies showed up twice.
   rollEls.forEach(function (el) {
-    // only plain-text leaves (skip anchors with nested markup)
-    if (el.children.length) return;
-    buildRoll(el);
-    el.addEventListener("mouseenter", function () { roll(el, true); });
-    el.addEventListener("mouseleave", function () { roll(el, false); });
-    el.addEventListener("focus", function () { roll(el, true); });
-    el.addEventListener("blur", function () { roll(el, false); });
-    // app.js rewrites textContent on language switch -> rebuild
-    new MutationObserver(function () {
-      if (el._fxBusy || $(".fx-roll", el)) return;
-      el.removeAttribute("data-fx-text");
-      buildRoll(el);
-    }).observe(el, { childList: true, characterData: true });
+    if (el.children.length) return;   // only plain-text leaves
+    function ready() {
+      if (!$(".fx-roll", el)) { el.removeAttribute("data-fx-text"); buildRoll(el); }   // text may have changed (EN/ID)
+    }
+    el.addEventListener("mouseenter", function () { ready(); roll(el, true); });
+    el.addEventListener("focus", function () { ready(); roll(el, true); });
+    el.addEventListener("mouseleave", function () { if ($(".fx-roll", el)) roll(el, false); });
+    el.addEventListener("blur", function () { if ($(".fx-roll", el)) roll(el, false); });
   });
 
   /* ---------- 3. Scroll-reactive marquee ---------- */
