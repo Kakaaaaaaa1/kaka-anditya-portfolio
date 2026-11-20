@@ -125,7 +125,7 @@
         m4L: "STATUS", m4V: "● Open to Work",
         quote: "“Good code is code other people enjoy reading.”",
         abSub2: "// EDUCATION & EXPERIENCE",
-        tl1Yr: "SEMESTER 6 · 2026", tl1Tag: "BACHELOR'S DEGREE",
+        tl1Yr: "6TH SEMESTER · 2026", tl1Tag: "BACHELOR'S DEGREE",
         tl1Title: "Informatics Engineering (S1)",
         tl1Org: "Universitas Pamulang, South Tangerang",
         tl1Desc: "Currently in the 6th semester of the Informatics Engineering undergraduate program, focusing on software and web & mobile development.",
