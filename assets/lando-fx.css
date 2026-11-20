@@ -100,3 +100,10 @@ html.fx-pt-in::before { content: ""; position: fixed; inset: 0; z-index: 9999; b
 /* hero: "Hello, I'm" stays on its own line, the name sits below it */
 .hero .hl > .fx-clip { display: table; }
 .hero .hl > br { display: none; }
+
+/* narrow screens: keep "CONTACT →" on one line and give the long name room */
+.cta { white-space: nowrap; }
+@media (max-width: 420px) {
+  .brand { font-size: 16px; gap: 7px; }
+  .nav { gap: 8px; }
+}
