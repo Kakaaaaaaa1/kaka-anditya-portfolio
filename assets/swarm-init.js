@@ -81,7 +81,7 @@
       // reduced motion (vestibular disorders). They get the real site immediately.
       // Override with ?swarm=1 when recording.
       function prefersReducedMotion() {
-        if (forced()) return false;
+        if (q("swarm") === "1" || q("swarm") === "on") return false;   // only an explicit ?swarm=1 overrides reduced motion
         try {
           return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         } catch (_) {
@@ -195,7 +195,7 @@
         if (!opts.auto) return;
         if (disabled()) return;
         if (prefersReducedMotion()) return;
-        if (!forced() && cameFromOwnSite()) return;
+        if (q("swarm") !== "1" && q("swarm") !== "on" && cameFromOwnSite()) return;
         if (alreadyDone()) return;
         if (window[KEY]) return; // already running
 
