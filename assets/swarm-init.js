@@ -136,12 +136,22 @@
         });
       }
 
+      // The intro builds the page top-down, so it must start from the top. Without this, a refresh
+      // while scrolled down makes the browser restore that position and the swarm paints out of view.
+      // behavior:"instant" because the page sets scroll-behavior:smooth.
+      function goTop() {
+        try { window.scrollTo({ top: 0, left: 0, behavior: "instant" }); } catch (_) { window.scrollTo(0, 0); }
+      }
+
       async function boot() {
         if (!opts.auto) return;
         if (disabled()) return;
         if (prefersReducedMotion()) return;
         if (alreadyDone()) return;
         if (window[KEY]) return; // already running
+
+        try { history.scrollRestoration = "manual"; } catch (_) { }
+        goTop();
 
         // Let the real page paint before we snapshot it.
         await new Promise(function (r) {
@@ -171,6 +181,7 @@
         if (document.visibilityState !== "visible") return;
 
         try {
+          goTop();
           await loadEngine();
           markDone();
           // Auto-start Tour: visitors get the smooth scroll-driven build
